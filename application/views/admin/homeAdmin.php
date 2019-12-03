@@ -11,14 +11,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
             <div class="col-md-12 col-lg-6 col-xl-4 mt-2">
                 <div class="card text-center">
                     <div class="card-body">
-                        <h5 class="bg-white text-dark"><i class="fas fa-shopping-basket"></i>  Lorem </h5>
+                        <h5 class="bg-white text-dark"><i class="fas fa-shopping-basket"></i> Lorem </h5>
                         <p class="card-text">Lorem ipsum dolor sit</p>
                         <a href="<?= base_url() ?>" class="btn btn-danger btn-lg btn-block">Ver</a>
                     </div>
                 </div>
             </div>
 
-          
+            
+
+
+
         </div>
 
     </div>

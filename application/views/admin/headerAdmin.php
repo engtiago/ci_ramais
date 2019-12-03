@@ -34,7 +34,7 @@ $this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a href="<?= base_url() ?>"><img class="navbar-brand" src="<?= base_url('assets/img/GRUPO_MAIS.png') ?>" alt="" style="width: 14%;"></a>
+        <a href="<?= base_url() ?>"><img class="navbar-brand" src="<?= base_url('assets/img/GRUPO_MAIS.png') ?>" alt=""></a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -46,6 +46,8 @@ $this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
                 <li class="nav-item active">
                     <a class="nav-link" href="<?= base_url('/admin') ?>">Home</a>
                 </li>
+
+               
 
                 <?php if ($this->session->userdata("usuario_logado")) : ?>
                     <?php
@@ -75,6 +77,32 @@ $this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
                         </li>
                     <?php endif; ?>
 
+                    <?php if (verificaniveldeacesso($nivel, "Admin_receitas")) : ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownReceita" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Receitas
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownReceita">
+                                <a class="dropdown-item" href="<?= base_url("Admin_receitas/listareceitas") ?>">Receitas</a>
+                                <a class="dropdown-item" href="<?= base_url("Admin_receitas/novareceita") ?>">Nova Receita</a>
+                                <a class="dropdown-item" href="<?= base_url("Admin_receitas/listacategoriareceitas") ?>">Categorias</a>
+                                <a class="dropdown-item" href="<?= base_url("Admin_receitas/novacategoriareceita") ?>">Nova Categoria</a>
+                            </div>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php if (verificaniveldeacesso($nivel, "Admin_instrucoes")) : ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCarrousel" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Instruções
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownCarrousel">
+                                <a class="dropdown-item" href="<?= base_url("Admin_instrucoes/listaPostsBlog") ?>"> Ver Instruções</a>
+                                <a class="dropdown-item" href="<?= base_url("Admin_instrucoes/novopost") ?>">Nova Instrução</a>
+                            </div>
+                        </li>
+                    <?php endif; ?>
+
                     <?php if (verificaniveldeacesso($nivel, "Admin_auth")) : ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAdmin" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -90,9 +118,12 @@ $this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
                             </div>
                         </li>
                     <?php endif; ?>
+
+                    
             </ul>
 
             <ul class="navbar-nav ml-auto">
+
                 <li class="nav-item ">
                     <a class="nav-link" href="<?= base_url('login/logout') ?>">Sair</a>
                 </li>
@@ -110,5 +141,3 @@ $this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
     <?php endif ?>
 
     <main>
-
-   

@@ -7,17 +7,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 		<div class="row py-5">
 			<div class="col-md-4">
 				<div align="center">
-					<img src="<?= base_url()?>assets/img/GRUPO_MAIS.png" style="width: 70%;">
+					<img src="<?= base_url() ?>assets/img/GRUPO_MAIS.png" style="width: 70%;">
 				</div>
 			</div>
 			<div class="col-md-8">
 				<div class="row">
 					<div class="col-md-6 my-2">
-						<h4>Controles de sistemas online</h4>
-
+						<h4>Área interna Ramais</h4>
+						
 						<?php if ($this->session->userdata("usuario_logado")) : ?>
 							<p> </p>
-							<?php endif; ?>
+						<?php endif; ?>
+
 					</div>
 					<div class="col-md-6 my-2">
 						<h4>Email para suporte:</h4>
