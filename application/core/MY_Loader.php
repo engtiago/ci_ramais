@@ -3,11 +3,11 @@
 class My_Loader extends CI_Loader
 {
 
-	public function template($nome, $dados = array(), $datapage = array())
-	{
-		$this->view("commons/header", $dados);
-		$this->view($nome, $datapage);
-		$this->view("commons/footer");
+	public function geraQRCODE($nome, $email, $celular, $telefone)
+	{		
+		$vcard = "BEGIN:VCARD\nVERSION:3.0\nN:;$nome\nFN:$nome\nEMAIL:$email\nURL:https://marizafoods.com.br\nTEL;TYPE=CELL:$celular\nTEL;TYPE=WORK:$telefone\nEND:VCARD";
+		$vcard = urlencode($vcard);
+		return "https://chart.apis.google.com/chart?cht=qr&chs=547x547&choe=UTF-8&chld=L&chl=$vcard";
 	}
 
 	public function templateAdmin($nome, $dados = array('title' => 'MarizaFoods | Admin', 'description' => 'Marizafoods Admin'), $datapage = array())
@@ -28,7 +28,6 @@ class My_Loader extends CI_Loader
 		$this->view("commons/alert", $alert);
 	}
 
-
 	public function configPagination()
 	{
 		$config['full_tag_open']    = '<div class="pagging text-center"><nav><ul class="pagination">';
@@ -48,36 +47,34 @@ class My_Loader extends CI_Loader
 		return $config;
 	}
 
-
 	public function captcha($controller)
-    {
+	{
 		$controller->load->helper('captcha');
-        $random = substr(str_shuffle(str_repeat('abcdefghijklmnopqrstuvwxyz0123456789', 5)), 0, 5);
-        $sessioncaptcha = array('user_captcha' => $random);
-      	$controller->session->set_userdata($sessioncaptcha);
-        $vals = array(
-            'captcha_form' => TRUE,
-            'word'          => $random,
+		$random = substr(str_shuffle(str_repeat('abcdefghijklmnopqrstuvwxyz0123456789', 5)), 0, 5);
+		$sessioncaptcha = array('user_captcha' => $random);
+		$controller->session->set_userdata($sessioncaptcha);
+		$vals = array(
+			'captcha_form' => TRUE,
+			'word'          => $random,
 			'img_path'      => './assets/',
-            'img_url'       => base_url('assets/'),
-            'font_path'     => APPPATH . '../assets/font-captcha.ttf',
-            'img_width'     => '200',
-            'img_height'    => 70,
-            'expiration'    => 1,
-            'word_length'   => 8,
-            'font_size'     => 30,
-            'img_id'        => 'Imageid',
-            'pool'          => '16052019manoelsoarescoelho',
-            'colors'        => array(
-                'background' => array(200, 400, 300),
-                'border' => array(0, 80, 0),
-                'text' => array(0,80, 0),
-                'grid' => array(0, 80, 0)
-            )
-        );
-        //cria captcha
-		
-	  return create_captcha($vals);
-		
-    }
+			'img_url'       => base_url('assets/'),
+			'font_path'     => APPPATH . '../assets/font-captcha.ttf',
+			'img_width'     => '200',
+			'img_height'    => 70,
+			'expiration'    => 1,
+			'word_length'   => 8,
+			'font_size'     => 30,
+			'img_id'        => 'Imageid',
+			'pool'          => '16052019manoelsoarescoelho',
+			'colors'        => array(
+				'background' => array(200, 400, 300),
+				'border' => array(0, 80, 0),
+				'text' => array(0, 80, 0),
+				'grid' => array(0, 80, 0)
+			)
+		);
+		//cria captcha
+
+		return create_captcha($vals);
+	}
 }

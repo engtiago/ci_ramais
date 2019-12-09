@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 <?php
 if ($post_blog == null) {
-    $titulo = "Novo post do blog";
+    $titulo = "Nova Instrução";
     $post_blog['id_post_blog'] = "";
     $post_blog['titulo_post_blog'] = "";
     $post_blog['categoria_post_blog'] = "";
@@ -79,7 +79,7 @@ if ($post_blog == null) {
         echo form_hidden("img_post_blog", $post_blog['img_post_blog']);
     };
     echo ($div_form_col);
-    echo form_label("Testa:", "img_post_blog");
+    echo form_label("Imagem:", "img_post_blog");
     echo form_upload(array(
         "type" => "text",
         "class" => "form-control-file",

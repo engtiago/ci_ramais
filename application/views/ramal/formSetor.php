@@ -3,20 +3,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 
 <?php
-if ($categoriaReceita == null) {
-    $titulo = "Nova Categoria de Receita";
-    $categoriaReceita['id_categoria_receita'] = "";
-    $categoriaReceita['nome_categoria_receita'] = "";
-    $categoriaReceita['descricao_categoria_receita'] = "";
+if ($setor == null) {
+    $titulo = "Novo Setor";
+    $setor['id_setor'] = "";
+    $setor['nome_setor'] = "";
+    $setor['ramal_setor'] = "";
 } else {
-    $titulo = "Editar Categoria de Receita";
+    $titulo = "Editar setor";
 }
 ?>
 
 <div class="container my-5">
 <h2 class="my-3">
         <?= $titulo ?>
-        <?= anchor("Admin_receitas/listacategoriareceitas", "Ver categorias de Receitas", array(
+        <?= anchor("Admin_ramal/listaSetor", "Ver Setores", array(
             "role" => "button",
             "class" => "btn btn-secondary"
         )); ?>
@@ -30,28 +30,28 @@ if ($categoriaReceita == null) {
     echo form_open_multipart($formsubmit);
     echo ($div_form_row);
 
-    echo form_hidden("id_categoria_receita", $categoriaReceita['id_categoria_receita']);
+    echo form_hidden("id_setor", $setor['id_setor']);
 
     echo ($div_form_col);
-    echo form_label("Nome da categoria:", "nome_categoria_receita");
+    echo form_label("Nome do setor:", "nome_setor");
     echo form_input(array(
-        "name" => "nome_categoria_receita",
-        "id" => "nome_categoria_receita",
+        "name" => "nome_setor",
+        "id" => "nome_setor",
         "class" => "form-control",
         "maxlength" => "255",
         "required" => "true",
-        "value" =>  $categoriaReceita['nome_categoria_receita']
+        "value" =>  $setor['nome_setor']
     ));
     echo ($end_div);
 
     echo ($div_form_col);
-    echo form_label("Descricão Categoria:", "descricao_categoria_receita");
+    echo form_label("Ramal Principal:", "ramal_setor");
     echo form_input(array(
-        "name" => "descricao_categoria_receita",
-        "id" => "descricao_categoria_receita",
+        "name" => "ramal_setor",
+        "id" => "ramal_setor",
         "class" => "form-control",
         "maxlength" => "255",
-        "value" =>  $categoriaReceita['descricao_categoria_receita']
+        "value" =>  $setor['ramal_setor']
     ));
     echo ($end_div);
 

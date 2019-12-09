@@ -68,8 +68,6 @@ class Admin_ramal extends CI_Controller
         $this->load->templateAdmin('ramal/listaRamal', $data, $dados);
     }
 
-
-
     /*Area interna functions 
     ########################################## */
     private function rulesRamal()
@@ -83,6 +81,11 @@ class Admin_ramal extends CI_Controller
             array(
                 'field'    =>    'numero_ramal',
                 'label'    =>    'Numero',
+                'rules'    =>    'trim|max_length[255]'
+            ),
+            array(
+                'field'    =>    'celular_ramal',
+                'label'    =>    'Celular',
                 'rules'    =>    'trim|max_length[255]'
             ),
             array(
@@ -108,6 +111,7 @@ class Admin_ramal extends CI_Controller
             $ramal = array(
                 "nome_ramal" => $post["nome_ramal"],
                 "numero_ramal" => $post["numero_ramal"],
+                "celular_ramal" => $post["celular_ramal"],
                 "email_ramal" => $post["email_ramal"],
                 "setor_id_setor" => $post["setor_id_setor"],
             );
@@ -145,6 +149,7 @@ class Admin_ramal extends CI_Controller
                 "id_ramal" => $post["id_ramal"],
                 "nome_ramal" => $post["nome_ramal"],
                 "numero_ramal" => $post["numero_ramal"],
+                "celular_ramal" => $post["celular_ramal"],
                 "email_ramal" => $post["email_ramal"],
                 "setor_id_setor" => $post["setor_id_setor"]
             );
@@ -179,7 +184,7 @@ class Admin_ramal extends CI_Controller
                 'msg' => 'Erro ao excluir Ramal'
             ));
         }
-        redirect(base_url('Admin_ramal/listaRamal'));
+        redirect(base_url('Admin_ramal/listaRamais'));
     }
 
     /*Area interna  categorias_receitas
@@ -190,7 +195,7 @@ class Admin_ramal extends CI_Controller
         $data['title']    =    "Setor | Cadastro ";
         $data['description']    =    "Novo Setor";
         $dados = array(
-            'categoriaReceita' => null,
+            'setor' => null,
             'formsubmit' => 'Admin_ramal/function_novoSetor'
         );
         $this->load->templateAdmin('ramal/formSetor', $data, $dados);
@@ -200,24 +205,29 @@ class Admin_ramal extends CI_Controller
     {
         $data['title']    =    "Setor | Edição ";
         $data['description']    =    "Editar Setor";
-        $categoriaReceita = $this->Ramal_model->buscaSetorId($id_setor);
+        $setor = $this->Ramal_model->buscaSetorId($id_setor);
         $dados = array(
-            'categoriaReceita' => $categoriaReceita,
+            'setor' => $setor,
             'formsubmit' => 'Admin_ramal/function_editSetor'
 
         );
-        $this->load->templateAdmin('receitas/formCategoriaReceita', $data, $dados);
+        $this->load->templateAdmin('ramal/formSetor', $data, $dados);
     }
 
-    public function listaSetor()
+    public function listaSetor($pesquisa='all')
     {
-        $data['title']    =    "Marizafoods | Lista de categoria de Receitas";
-        $data['description']    =    "Sabor é Assim";
-        $categoriaReceita = $this->Receita_model->buscaCategorias();
+        if ($this->input->post()) {
+            $pesquisa = $this->input->post('pesquisa');
+        }
+
+        $pesquisa = urldecode($pesquisa);
+        $data['title']    =    "Setor | Lista setor";
+        $data['description']    =    "Lista setor";
+        $setor = $this->Ramal_model->buscaSetores($pesquisa);
         $dados = array(
-            'categoriaReceita' => $categoriaReceita
+            'setor' => $setor
         );
-        $this->load->templateAdmin('receitas/listaCategoriaReceita', $data, $dados);
+        $this->load->templateAdmin('ramal/listaSetor', $data, $dados);
     }
 
     /*Area interna functions  categoria receitas
@@ -226,7 +236,7 @@ class Admin_ramal extends CI_Controller
     {
         return  [
             array(
-                'field' => 'noem_setor',
+                'field' => 'nome_setor',
                 'label' => 'Nome',
                 'rules' =>  'trim|required|min_length[3]|max_length[255]'
             ),
@@ -249,11 +259,11 @@ class Admin_ramal extends CI_Controller
                 "nome_setor" => $post['nome_setor'],
                 "ramal_setor" => $post['ramal_setor']
             );
-            $this->Receita_model->salvaSetor($setor);
+            $this->Ramal_model->salvaSetor($setor);
             $this->session->set_flashdata('alert', array(
                 'tipo' => 'success',
                 'strongMsg' => '<i class="fas fa-check"></i> Sucesso',
-                'msg' => 'Novo setor salvo'
+                'msg' => 'novo setor salvo'
             ));
         } else {
             $this->session->set_flashdata('alert', array(
@@ -262,7 +272,7 @@ class Admin_ramal extends CI_Controller
                 'msg' => validation_errors()
             ));
         }
-        redirect(base_url('Admin_ramal/novoSetor'));
+        redirect(base_url("Admin_ramal/listaSetor"));
     }
 
     public function function_editSetor()
@@ -297,25 +307,26 @@ class Admin_ramal extends CI_Controller
                 'msg' => validation_errors()
             ));
         }
-        redirect(base_url('Admin_ramal/listacategoriareceitas'));
+        redirect(base_url("Admin_ramal/listaSetor"));
     }
 
-    public function function_deletCategoriaReceita($id_categoria_receita)
-    {
-        if ($this->Receita_model->deleteCategoria($id_categoria_receita)) {
+    public function function_deletarSetor($id_setor)
+    {   
+        $this->Ramal_model->deleteSetor($id_setor);
+        if (false) {
             $this->session->set_flashdata('alert', array(
                 'tipo' => 'success',
                 'strongMsg' => '<i class="fas fa-check"></i> Sucesso',
-                'msg' => 'Categoria deletada'
+                'msg' => 'Setor deletado'
             ));
         } else {
             $this->session->set_flashdata('alert', array(
                 'tipo' => 'danger',
                 'strongMsg' => '<i class="fas fa-times"></i> Erro',
-                'msg' => 'Erro ao excluir Categoria'
+                'msg' => 'Erro ao excluir setor'
             ));
         }
-        redirect(base_url() . 'Admin_receitas/listacategoriareceitas');
+        redirect(base_url("Admin_ramal/listaSetor"));
     }
 
     private function UploadFile($inputFileName)

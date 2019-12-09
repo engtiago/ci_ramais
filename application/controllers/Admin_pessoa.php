@@ -12,10 +12,7 @@ class Admin_pessoa extends CI_Controller
 		//$this->output->enable_profiler(TRUE);
 	}
 
-	public function ver($ver)
-	{
-		print_r($this->Pessoa_model->buscaPessoaId($ver));
-	}
+	
 
 	#######################################################################
 	public function novapessoa()
@@ -90,12 +87,7 @@ class Admin_pessoa extends CI_Controller
 			array(
 				'field'    =>    'senha_pessoa',
 				'label'    =>    'Senha',
-				'rules'    =>    'trim|required|min_length[3]|max_length[255]'
-			),
-			array(
-				'field'    =>    'email_pessoa',
-				'label'    =>    'Email',
-				'rules'    =>    'is_unique[pessoa.email_pessoa]|valid_email|trim|required|min_length[3]|max_length[255]'
+				'rules'    =>    'trim|min_length[3]|max_length[255]'
 			),
 			array(
 				'field'    =>    'nivel_acesso_id_nivel_acesso',
@@ -103,9 +95,39 @@ class Admin_pessoa extends CI_Controller
 				'rules'    =>    'trim|required|integer'
 			),
 			array(
-				'field'    =>    'setor_id',
-				'label'    =>    'Setor',
-				'rules'    =>    'trim|required|integer'
+				'field'    =>    'cep_endereco',
+				'label'    =>    'CEP',
+				'rules'    =>    'trim|required|min_length[3]|max_length[255]'
+			),
+			array(
+				'field'    =>    'logradouro_endereco',
+				'label'    =>    'Logradouro',
+				'rules'    =>    'trim|required|min_length[3]|max_length[255]'
+			),
+			array(
+				'field'    =>    'bairro_endereco',
+				'label'    =>    'Bairro',
+				'rules'    =>    'trim|required|min_length[3]|max_length[255]'
+			),
+			array(
+				'field'    =>    'numero_endereco',
+				'label'    =>    'Numero',
+				'rules'    =>    'trim|required|min_length[1]|max_length[255]'
+			),
+			array(
+				'field'    =>    'cidade_endereco',
+				'label'    =>    'Cidade',
+				'rules'    =>    'trim|required|min_length[3]|max_length[255]'
+			),
+			array(
+				'field'    =>    'uf_endereco',
+				'label'    =>    'UF-Estado',
+				'rules'    =>    'trim|required|min_length[1]|max_length[255]'
+			),
+			array(
+				'field'    =>    'complemento_endereco',
+				'label'    =>    'Cidade',
+				'rules'    =>    'trim|min_length[3]|max_length[255]'
 			)
 		);
 
@@ -146,8 +168,6 @@ class Admin_pessoa extends CI_Controller
 	public function function_editPessoa()
 	{
 		$post = $this->input->post();
-		print_r($post);
-		exit;
 		$rules    =    array(
 			array(
 				'field'    =>    'id_pessoa',

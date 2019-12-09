@@ -15,7 +15,7 @@ class Login extends CI_Controller
 		if ($this->session->userdata("usuario_logado")) {
 			redirect(base_url() . "admin");
 		} else {
-			$data['title']    =    "Protocos - Marizafoods | Faça seu login";
+			$data['title']    =    "Ramal | Faça seu login";
 			$data['description']    =    "Faça seu login";
 			$dados['titulo'] = "Área do Representante";
 			$this->load->templateadmin("login/login", $data, $dados);
@@ -57,7 +57,7 @@ class Login extends CI_Controller
 					'strongMsg' => '<i class="fas fa-times"></i> Erro',
 					'msg' => 'Usuário ou senha invalidos'
 				));
-				redirect(base_url("admin"));
+				redirect(base_url("Login"));
 			}
 		} else {
 			$this->session->set_flashdata('alert', array(
@@ -65,7 +65,7 @@ class Login extends CI_Controller
 				'strongMsg' => '<i class="fas fa-times"></i> Erro',
 				'msg' => validation_errors()
 			));
-			redirect(base_url("admin"));
+			redirect(base_url("Login"));
 		}
 	}
 

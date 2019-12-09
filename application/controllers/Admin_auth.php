@@ -262,11 +262,7 @@ class Admin_auth extends CI_Controller
 
     /*controler nivel_acesso_programa
     ########################################## */
-    public function teste()
-    {
-       print_r($this->Auth_model->buscaNivel_Acesso_Programa_separado());
-    }
-
+    
     public function novonivel_acesso_programa()
     {   
         $data['title']    =    "Marizafoods | Novo Nível de acesso ao programa";

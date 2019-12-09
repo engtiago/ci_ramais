@@ -59,3 +59,24 @@ main{
   padding: 10px;
   margin: 10px;
 }
+
+/* ########### - RAMAIS  - ########### */
+.accordion > .card .card-header {
+   margin-bottom: 0px; 
+   border-radius: 10px;
+   
+}
+
+.card{
+  border: 0px;
+}
+
+.accordion , .card-body {
+   padding:0; 
+}
+
+
+
+.lista-contato , a{
+  color: black;
+}

@@ -28,7 +28,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
     </div>
     <div class="col-4 col-sm-3">
       <?php echo form_button(array(
-        "class" => "btn btn-danger",
+        "class" => "btn btn-secondary",
         "content" => "Pesquisar",
         "type" => "submit"
       )); ?>

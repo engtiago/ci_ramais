@@ -14,16 +14,18 @@ class Admin extends CI_Controller
 
 	public function index()
 	{
-		$data['title']    =    "Marizafoods | Admin";
-		$data['description']    =    "Admin";
-		$this->load->templateAdmin('admin/homeAdmin', $data);
+		$this->load->model('Ramal_model');
+		$data['title']    =    "Ramal";
+        $data['description']    =    "Todos os Ramais";
+        $ramal = $this->Ramal_model->buscaTudoRamal(1000000, 0,null,'all')->result_array();
+        $setor = $this->Ramal_model->buscaSetores();
+        $dados = array(
+            'ramal' => $ramal,
+            'setor' => $setor
+        );
+        $this->load->templateAdmin('ramal/ramal', $data, $dados);
 	}
 	
-	public function teste()
-	{
-		$data['title']    =    "Marizafoods | teste";
-		$data['description']    =    "teste";
-		$this->load->templateAdmin('admin/teste', $data);
-	}
+
 
 }

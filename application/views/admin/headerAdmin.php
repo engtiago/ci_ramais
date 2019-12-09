@@ -44,49 +44,28 @@ $this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
             <ul class="navbar-nav mr-auto">
 
                 <li class="nav-item active">
-                    <a class="nav-link" href="<?= base_url('/admin') ?>">Home</a>
+                    <a class="nav-link" href="<?= base_url('Ramal') ?>">Home</a>
+                </li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="<?= base_url('Instrucoes') ?>">Instruções</a>
                 </li>
 
-               
 
                 <?php if ($this->session->userdata("usuario_logado")) : ?>
                     <?php
                         $acesso = $this->session->userdata("usuario_logado")['nivel_acesso_id_nivel_acesso'];
                         $nivel = $this->Auth_model->buscaAcesso($acesso);
                         ?>
-                    <?php if (verificaniveldeacesso($nivel, "Admin")) : ?>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownmerchan" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Dashboard
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownmerchan">
-                                <a class="dropdown-item" href="<?= base_url() ?>">Lorem</a>
-                            </div>
-                        </li>
-                    <?php endif; ?>
-
-                    <?php if (verificaniveldeacesso($nivel, "Admin_pessoa")) : ?>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCarrousel" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Pessoa
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdownCarrousel">
-                                <a class="dropdown-item" href="<?= base_url("Admin_pessoa/listapessoa") ?>">Pessoas</a>
-                                <a class="dropdown-item" href="<?= base_url("Admin_pessoa/novapessoa") ?>">Nova Pessoa</a>
-                            </div>
-                        </li>
-                    <?php endif; ?>
-
-                    <?php if (verificaniveldeacesso($nivel, "Admin_receitas")) : ?>
+                    <?php if (verificaniveldeacesso($nivel, "Admin_ramal")) : ?>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownReceita" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Receitas
+                                Ramais
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownReceita">
-                                <a class="dropdown-item" href="<?= base_url("Admin_receitas/listareceitas") ?>">Receitas</a>
-                                <a class="dropdown-item" href="<?= base_url("Admin_receitas/novareceita") ?>">Nova Receita</a>
-                                <a class="dropdown-item" href="<?= base_url("Admin_receitas/listacategoriareceitas") ?>">Categorias</a>
-                                <a class="dropdown-item" href="<?= base_url("Admin_receitas/novacategoriareceita") ?>">Nova Categoria</a>
+                                <a class="dropdown-item" href="<?= base_url("Admin_ramal/listaRamais") ?>">Ramais</a>
+                                <a class="dropdown-item" href="<?= base_url("Admin_ramal/novoRamal") ?>">Novo Ramal</a>
+                                <a class="dropdown-item" href="<?= base_url("Admin_ramal/listaSetor") ?>">Setores</a>
+                                <a class="dropdown-item" href="<?= base_url("Admin_ramal/novoSetor") ?>">Novo Setor</a>
                             </div>
                         </li>
                     <?php endif; ?>
@@ -99,6 +78,18 @@ $this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownCarrousel">
                                 <a class="dropdown-item" href="<?= base_url("Admin_instrucoes/listaPostsBlog") ?>"> Ver Instruções</a>
                                 <a class="dropdown-item" href="<?= base_url("Admin_instrucoes/novopost") ?>">Nova Instrução</a>
+                            </div>
+                        </li>
+                    <?php endif; ?>
+
+                    <?php if (verificaniveldeacesso($nivel, "Admin_pessoa")) : ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCarrousel" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Pessoa
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownCarrousel">
+                                <a class="dropdown-item" href="<?= base_url("Admin_pessoa/listapessoa") ?>">Pessoas</a>
+                                <a class="dropdown-item" href="<?= base_url("Admin_pessoa/novapessoa") ?>">Nova Pessoa</a>
                             </div>
                         </li>
                     <?php endif; ?>
@@ -119,16 +110,16 @@ $this->output->set_header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
                         </li>
                     <?php endif; ?>
 
-                    
+
             </ul>
 
             <ul class="navbar-nav ml-auto">
-
                 <li class="nav-item ">
                     <a class="nav-link" href="<?= base_url('login/logout') ?>">Sair</a>
                 </li>
             </ul>
         <?php endif; ?>
+
 
         </div>
     </nav>

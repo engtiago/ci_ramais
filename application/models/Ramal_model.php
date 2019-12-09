@@ -6,17 +6,18 @@ class Ramal_model extends CI_Model
   /*receitas
     ########################################## */
 
-  public function buscaTudoRamal($limit, $start,$order_by, $pesquisa)
+  public function buscaTudoRamal($limit, $start, $order_by = 'id_ramal', $pesquisa)
   {
-    if($pesquisa != 'all'){
+    if ($pesquisa != 'all') {
       $pesquisa = $this->db->escape_str($pesquisa);
       $this->db->like("numero_ramal", $pesquisa);
+      $this->db->or_like("nome_ramal", $pesquisa);
       $this->db->or_like("nome_setor", $pesquisa);
     }
-    
+
     $this->db->select('*');
     $this->db->from('ramal');
-    $this->db->join('setor', 'id_setor = setor_id_setor');
+    $this->db->join('setor', 'id_setor = setor_id_setor', 'left');
     $this->db->limit($limit, $start);
     $this->db->order_by($order_by);
     return $this->db->get();
@@ -26,8 +27,8 @@ class Ramal_model extends CI_Model
   {
     $this->db->select('*');
     $this->db->from('ramal');
-    $this->db->join('setor', 'id_setor = setor_id_setor');
-    $this->db->where('id_ramal',$id_ramal);
+    $this->db->join('setor', 'id_setor = setor_id_setor','left');
+    $this->db->where('id_ramal', $id_ramal);
     return $this->db->get()->row_array();
   }
 
@@ -38,20 +39,23 @@ class Ramal_model extends CI_Model
 
   public function editarRamal($ramal)
   {
-    $where = array('id)ramal' => $ramal['id_ramal']);
+    $where = array('id_ramal' => $ramal['id_ramal']);
     $this->db->where($where);
     return $this->db->update('ramal', $ramal);
   }
 
   public function deleteRamal($id_ramal)
   {
-    return $this->db->delete('ramal',['id_ramal' => $id_ramal]); 
+    return $this->db->delete('ramal', ['id_ramal' => $id_ramal]);
   }
 
   /*categorias
     ########################################## */
-  public function buscaSetores()
+  public function buscaSetores($pesquisa = 'all')
   {
+    if ($pesquisa != 'all') {
+      $this->db->like("nome_setor", $pesquisa);
+    }
     return $this->db->get("setor")->result_array();
   }
 
@@ -67,14 +71,16 @@ class Ramal_model extends CI_Model
 
   public function editarsetor($setor)
   {
-    $where = array('id_setor' => $setor['id_setor']);
-    $this->db->where($where);
+    $this->db->where(['id_setor' => $setor['id_setor']]);
     return $this->db->update('setor', $setor);
   }
 
-  public function deleteCategoria($id_setor)
+  public function deleteSetor($id_setor)
   {
+    $ramal = ['setor_id_setor' => 0]; 
+    $this->db->where(['setor_id_setor' => $id_setor]);
+    $this->db->update('ramal', $ramal);
+
     return $this->db->delete('setor', ['id_setor' => $id_setor]);
   }
-
 }
